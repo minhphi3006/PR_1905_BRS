@@ -7,6 +7,10 @@
   post    'sessions/create'
   delete  'sessions/destroy'
 
+  resources :posts do
+    resources :likes
+  end
+
   resources :users do
     member do
       get :following, :followers
