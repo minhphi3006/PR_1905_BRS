@@ -2,26 +2,29 @@
   <div class="profile row">
     <div class="col-md-4 avatar">
       <div class="wrapper">
-        <img src="/assets/01.jpg">
+        <%if @user.avatar.attached? %>
+          <%= image_tag @user.avatar%>
+        <%else%>
+          <%=image_tag(asset_path("Avatar.png"))%>
+        <%end%>
       </div>
     </div>
     <div class="col-md-8 basic-info">
       <div class="user-wrapper">
         <h2 class="username"><%=@user.name%></h2>
-        <a class="edit-profile">
         <a class="edit-profile" href="<%= edit_user_path(current_user) %>">
           <button>Edit Profile</button>
         </a>
-        </a>
-        <ul class="posts">
-          <li><span><%= @posts.count %></span> posts</li>
-        </ul>
       </div>
-      <%=render "stats" %>
+      <ul class="posts">
+        <li><span><%= @posts.count %></span> posts</li>
+        <%=render "stats" %>
+      </ul>
+      <%= render "follow_form" if logged_in? %>
     </div>
-    <%= render "follow_form" if logged_in? %>
   </div>
 </div>
+
 <div class="user-tabs">
   <a class="tab active" href="">
     <i class="fa fa-th"></i>

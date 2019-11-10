@@ -106,7 +106,7 @@
   letter-spacing: 0.8rem;
   background: -webkit-linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
   -webkit-text-fill-color: transparent;
-  
+
 }
 
 .masthead h2 {
@@ -395,7 +395,7 @@ footer {
     font-weight: 600;
   }
 }
-user-tabs{
+.user-tabs{
   border-top: 1px solid #efefef;
   display: flex;
   justify-content: center;a.tab{
@@ -422,7 +422,8 @@ user-tabs{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 0 20px;.wrapper{
+  margin: 0 20px;
+  .wrapper{
     width: 280px;
     height: 280px;
     margin: 15px;
@@ -436,10 +437,10 @@ user-tabs{
   display: flex;
   margin-top: 60px;
   min-height: 500px;
-  
+
   .actions{
     width: 220px;
-    border: 1px solid #dbdbdb;  
+    border: 1px solid #dbdbdb;
   }
   .details{
     flex: 1;
