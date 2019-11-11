@@ -15,7 +15,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.posts_on_timeline(current_user.list_of_followed_by_user, current_user)
   end
 
   private

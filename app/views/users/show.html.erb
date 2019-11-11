@@ -13,6 +13,9 @@
           <button>Edit Profile</button>
         </a>
         </a>
+        <ul class="posts">
+          <li><span><%= @posts.count %></span> posts</li>
+        </ul>
       </div>
       <%=render "stats" %>
     </div>
@@ -36,4 +39,11 @@
     <i class="fa fa-tag"></i>
     TAGGED
   </a>
+</div>
+<div class="user-images">
+  <% @posts.each do |post|%>
+    <div class="wrapper">
+      <%=image_tag post.image %>
+    </div>
+  <% end %>
 </div>

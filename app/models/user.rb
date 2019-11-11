@@ -63,4 +63,8 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+
+  def list_of_followed_by_user
+    Relationship.where(follower_id: self.id).pluck(:followed_id)
+  end
 end
