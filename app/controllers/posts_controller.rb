@@ -6,8 +6,12 @@ class PostsController < ApplicationController
       redirect_to index_path
     else
       flash[:danger] = "Post unsuccessfully created"
-      redirect_to posts_new_path
+      redirect_to new_post_path
     end
+  end
+
+  def show
+    @post=Post.find(params[:id])
   end
 
   def new

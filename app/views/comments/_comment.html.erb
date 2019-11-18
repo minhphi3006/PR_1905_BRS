@@ -1,0 +1,32 @@
+<%= form_for(:comment) do %>
+  <div class="user">
+    <div class = "username">
+     <div class="user">
+        <div class="avatar">
+          <%if comment.user.avatar.attached? %>
+            <%=link_to user_path(comment.user) do%>
+              <%= image_tag comment.user.avatar %>
+            <%end %>
+          <%else%>
+            <%=image_tag(asset_path("Avatar.png"))%>
+          <%end %>
+        </div>
+
+        <div class="username">
+          <%= link_to comment.user.name, user_path(comment.user) %>
+        </div>
+
+      </div>
+
+      <p class="caption"><%= comment.content%></p>
+      <p><small>Submitted <strong><%=time_ago_in_words(comment.created_at)%> ago </strong> by
+                                 <%=comment.user.name%></small></p>
+    </div>
+
+    <div class="user">
+      <%if (current_user.id == comment.user_id)|| (current_user.id == comment.post.user_id) %>
+        <%= link_to "Destroy", [comment.post, comment], method: :delete, data: {confirm: "Are you sure?"}, class: "5"%>
+      <%end%>
+    </div>
+  </div>
+<%end%>
