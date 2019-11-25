@@ -1,24 +1,28 @@
 <div class="posts">
   <% @posts.each do |post| %>
     <section class="post">
-  <div class="user">
-    <div class="avatar">
-      <%if post.user.avatar.attached? %>
-        <%=link_to user_path(post.user) do%>
-          <%= image_tag post.user.avatar %>
-        <%end %>
-      <%else%>
-        <%=image_tag(asset_path("Avatar.png"))%>
-      <%end %>
-    </div>
-    <div class="username">
-      <%= link_to post.user.name, user_path(post.user) %>
-    </div>
-  </div>
-  <%= image_tag post.image, class: 'main-image' %>
-  <div class="caption">
-    <%= post.caption %>
-  </div>
-</section>
+      <div class="user">
+        <div class="avatar">
+          <img src="user_avatar.jpg">
+        </div>
+        <div class="name">
+          <%= post.user.name %>
+        </div>
+      </div>
+      <%= image_tag post.image, class: 'main-image' %>
+      <div class="caption">
+        <%= post.caption %>
+      </div>
+      <div>
+        <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
+        <% if pre_like %>
+          <%= button_to 'Unlike', post_like_path(post, pre_like), method: :delete, remote: true %>
+        <% else %>
+          <%= button_to 'Like', post_likes_path(post), method: :post, remote: true %>
+        <% end %>
+
+        <p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+      </div>
+    </section>
   <% end %>
 </div>
