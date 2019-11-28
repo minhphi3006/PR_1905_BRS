@@ -16,13 +16,16 @@
       get :following, :followers
     end
   end
-
+  resources :posts do
+    resources :comments
+  end
   resources :relationships, only: [:create, :destroy]
   get '/index', to: 'posts#index'
-  get    '/posts',   to: 'posts#new'
-  post   '/posts',   to: 'posts#create'
-  get     'posts/new'
-  post    'posts/create'
+  get    '/post',   to: 'posts#new'
+  post   '/post',   to: 'posts#create'
+
+  delete   '/comment',   to: 'comments#destroy'
+  delete 'comments/destroy'
 
   root 'static_pages#home'
   get   '/home',        to: 'static_pages#home'

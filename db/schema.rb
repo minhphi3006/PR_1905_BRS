@@ -34,12 +34,13 @@ ActiveRecord::Schema.define(version: 2019_11_25_095230) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "content"
     t.integer "post_id"
-    t.integer "image_id"
+    t.text "content"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "hash_tags", force: :cascade do |t|
@@ -83,7 +84,6 @@ ActiveRecord::Schema.define(version: 2019_11_25_095230) do
   create_table "posts", force: :cascade do |t|
     t.string "caption"
     t.integer "user_id"
-    
     t.integer "image_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -101,6 +101,9 @@ ActiveRecord::Schema.define(version: 2019_11_25_095230) do
     t.integer "follower_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,3 +1,31 @@
-<% if flash[:notice] %>
-  <div class="notice"><%= flash[:notice] %></div>
-<% end %>
+<div class="post-show row">
+  <div class="col-md-8">
+    <%=image_tag @post.image, class: 'image' %>
+  </div>
+
+  <div class="col-md-4">
+    <div class="user">
+      <div class="avatar">
+        <%if @post.user.avatar.attached? %>
+          <%=link_to user_path(@post.user) do%>
+            <%= image_tag @post.user.avatar %>
+          <%end %>
+        <%else%>
+          <%=image_tag(asset_path("Avatar.png"))%>
+        <%end %>
+      </div>
+    </div>
+    <%= link_to @post.user.name, user_path(@post.user), class: 'username' %>
+
+    <div class="description">
+      <%= @post.caption %>
+      <%=render :partial => @post.comments%>
+      <br>
+      <%= form_for :comment ,url: post_comments_url(post_id: @post.id) do |f| %>
+        <%= f.label :content %>
+        <%= f.text_area :content, class: 'form-control' %>
+        <%= f.submit "Save"%>
+      <% end %>
+    </div>
+  </div>
+</div>
