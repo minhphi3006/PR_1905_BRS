@@ -18,7 +18,15 @@
     <%= link_to @post.user.name, user_path(@post.user), class: 'username' %>
 
     <div class="description">
-      <%= @post.caption %>
+      <div class="caption">
+        <% @post.caption.to_s.split(' ').each do |word| %>
+          <% if word.start_with?('#') %>
+            <%= link_to word, search_path(query: word) %>
+          <%else %>
+            <%= word %>
+          <%end %>
+        <% end %>
+      </div>
       <%=render :partial => @post.comments%>
       <br>
       <%= form_for :comment ,url: post_comments_url(post_id: @post.id) do |f| %>
