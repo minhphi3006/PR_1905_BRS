@@ -1,0 +1,43 @@
+<%= form_for comment do %>  
+  <div id="post_comment">
+    <div class="row">
+      <div class="col-lg-1">
+        <div class="avatar_post_comment">
+          <%if comment.user.avatar.attached? %>
+            <%=link_to user_path(comment.user) do %>
+              <%= image_tag comment.user.avatar %>
+            <%end %>
+          <%else%>
+            <%=image_tag(asset_path("Avatar.png"))%>
+          <%end %>
+        </div>
+      </div>
+
+      <div class="col-lg-10">
+        <div class="username_post_comment">
+          <span><%= link_to comment.user.name, user_path(comment.user) %><span>
+          <span><%= comment.content%></span>
+        </div>
+      </div>
+
+      <div id="delete_post_comment">
+        <div class="dropdown">
+          <button class="btn btn-secondary" type="button" id="dropdownMenuButton_post" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+          </button>
+          <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+            <%if (current_user.id == comment.user_id)|| (current_user.id == comment.post.user_id) %>
+              <%= link_to "Destroy", [comment.post, comment], method: :delete, data: {confirm: "Are you sure?"}, class: "comment_destroy"%>
+            <%end%>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="time_post_comment">
+        <p><strong><%=time_ago_in_words(comment.created_at)%> ago </strong> </p>
+      </div>
+    </div>
+  </div>
+<%end%>

@@ -1,1 +1,1 @@
-$("#postsArea").html("<%= escape_javascript(render ('posts/post_form')) %>");
+$("#index_post_<%= @post.id %>").html("<%= j render 'posts/post_content', post: @post, i: @i %>");

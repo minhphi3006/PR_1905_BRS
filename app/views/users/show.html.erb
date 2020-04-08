@@ -12,9 +12,11 @@
     <div class="col-md-8 basic-info">
       <div class="user-wrapper">
         <h2 class="username"><%=@user.name%></h2>
-        <a class="edit-profile" href="<%= edit_user_path(current_user) %>">
-          <button>Edit Profile</button>
-        </a>
+        <% if current_user== @user %>
+          <a class="edit-profile" href="<%= edit_user_path(current_user) %>">
+            <button>Edit Profile</button>
+          </a>
+        <% end %>
       </div>
       <ul class="posts">
         <li><span><%= @posts.count %></span> posts</li>
@@ -25,30 +27,47 @@
   </div>
 </div>
 
-<div class="user-tabs">
-  <a class="tab active" href="">
-    <i class="fa fa-th"></i>
-    POSTS
-  </a>
-  <a class="tab" href="">
-    <i class="fa fa-tv"></i>
-    IGTV
-  </a>
-  <a class="tab" href="">
-    <i class="fa fa-bookmark"></i>
-    SAVED
-  </a>
-  <a class="tab" href="">
-    <i class="fa fa-tag"></i>
-    TAGGED
-  </a>
-</div>
-<div class="user-images">
-  <% @posts.each do |post|%>
-    <div class="wrapper">
-      <%=link_to post_path(post) do%>
-        <%= image_tag post.image, class: 'main-image' %>
+<ul class="user-tabs" id="user_tabs">
+  <li>
+    <a class="tab active" href="#user_images_tab">
+      <i class="fa fa-th"></i>
+        POSTS
+    </a>
+  </li>
+  <li>
+    <a class="tab" href="#saved_tab">
+      <i class="fa fa-bookmark"></i>
+      SAVED
+    </a>
+  </li>
+  <li>
+    <a class="tab" href="#">
+      <i class="fa fa-tag"></i>
+      TAGGED
+    </a>
+  </li>
+</ul>
+<div class="tab_item">
+  <div class="user-images" id="user_images_tab">
+    <% @posts.each do |post|%>
+      <%if post.user_id == @user.id %>
+        <div class="wrapper">
+          <%=link_to post_path(post) do%>
+            <%= image_tag post.image, class: 'main-image img-responsive' %>
+          <%end %>
+        </div>
       <%end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+  <div class="user-images" id="saved_tab">
+    <% @user.savers.each do |saver|%>
+      <%if saver.user_id == current_user.id && saver.user_id == @user.id %>
+        <div class="wrapper">
+        <%=link_to post_path(saver.post) do%>
+            <%= image_tag saver.post.image, class: 'main-image' %>
+          <%end %>
+        </div>
+      <%end %>
+    <% end %>
+  </div>
 </div>

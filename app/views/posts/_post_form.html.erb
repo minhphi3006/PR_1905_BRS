@@ -1,59 +1,9 @@
 <div class="posts">
-  <% @posts.each do |post| %>
-    <section class="post">
-      <div class="user">
-        <div class="avatar">
-          <%if post.user.avatar.attached? %>
-            <%=link_to user_path(post.user) do%>
-              <%= image_tag post.user.avatar %>
-            <%end %>
-          <%else%>
-            <%=image_tag(asset_path("Avatar.png"))%>
-          <%end %>
-        </div>
-
-        <div class="username">
-          <%= link_to post.user.name, user_path(post.user) %>
-        </div>
-      </div>
-
-      <%=link_to post_path(post) do%>
-        <%= image_tag post.image, class: 'main-image' %>
-      <%end %>
-
-      <div class="caption">
-        <% post.caption.to_s.split(' ').each do |word| %>
-          <% if word.start_with?('#') %>
-            <%= link_to word, search_path(query: word) %>
-          <%else %>
-            <%= word %>
-          <%end %>
-        <% end %>
-      </div>
-
-      <div>
-        <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
-        <% if pre_like %>
-          <%= button_to 'Unlike', post_like_path(post, pre_like), method: :delete, remote: true %>
-        <% else %>
-          <%= button_to 'Like', post_likes_path(post), method: :post, remote: true %>
-        <% end %>
-
-        <p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
-      </div>
-
-      <h3><%= post.comments.count%> Comments </h3>
-
-      <%=render :partial => post.comments%>
-
-      <br>
-      <div>
-        <%= form_for :comment ,url: post_comments_url(post_id: post.id) do |f| %>
-          <%= f.label :content %>
-          <%= f.text_area :content, class: 'form-control' %>
-          <%= f.submit "Save"%>
-        <% end %>
-      </div>
+  <% @posts.each_with_index do |post, i| %>
+    <section class="post" id="index_post_<%= post.id %>">
+      <%= render "posts/post_content", post: post, i: i %>
     </section>
   <%end%>
 </div>
+
+

@@ -9,8 +9,9 @@ class CommentsController < ApplicationController
     @comment.user_id= current_user.id
     respond_to do |format|
       if @comment.save
-      format.html { redirect_to post_path(@post)  }
-      format.json { render json: @comment, status: created, location: @comment}
+        format.js {}
+        format.html { redirect_to posts_url }
+        format.json {}
       end
     end
   end
@@ -19,12 +20,33 @@ class CommentsController < ApplicationController
     @post=Post.find_by_id(params[:post_id])
     @comment= @post.comments.find(params[:id])
     @comment.destroy
-
-    redirect_to index_path
+    respond_to do |format|
+      format.js {}
+      format.html { redirect_to posts_url }
+    end
   end
 
-  private
-   def comment_params
+  def edit 
+    @post=Post.find_by_id(params[:post_id])
+    @comment= @post.comments.find(params[:id])
+  end
+
+  def update 
+    @post = Post.find(params[:post_id])
+    @comment= @post.comments.find(params[:id])
+    @comment.update_attributes(comment_content_params)
+    respond_to do |format|
+      format.js{}
+      format.html{ redirect_to index_path}
+    end
+  end
+
+private
+  def comment_params
     params.require(:comment).permit(:post_id, :content, :user_id)
-   end
+  end
+
+  def comment_content_params
+    params.require(:comment).permit(:content)
+  end
 end

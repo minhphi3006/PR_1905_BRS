@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 # git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.5.7'
 gem 'will_paginate'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -65,7 +65,7 @@ gem 'jquery-rails'
 gem 'faker'
 
 gem 'will_paginate'
-
+gem 'rails-i18n'
 # Specify your gem's dependencies in font-awesome-rails.gemspec
 gem 'font-awesome-rails'
 gem 'popper_js'

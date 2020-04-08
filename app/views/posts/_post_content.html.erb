@@ -1,0 +1,77 @@
+<div class="user">
+  <div class="avatar">
+    <%if post.user.avatar.attached? %>
+      <%=link_to user_path(post.user) do %>
+        <%= image_tag post.user.avatar %>
+      <%end %>
+    <%else%>
+      <%=image_tag(asset_path("Avatar.png"))%>
+    <%end %>
+  </div>
+
+  <div class="username">
+    <%= link_to post.user.name, user_path(post.user) %>
+  </div>
+</div>
+  
+<%=link_to post_path(post) do %>
+  <%= image_tag post.image, class: 'main-image' %>
+<%end %>
+
+<div class="description" id="description_<%= post.id %>">
+  <%= render 'posts/description', post: post %>
+</div>
+<div class='change_caption'>
+  <% if current_user?(post.user)%>
+  <%= link_to "Change Caption", edit_post_path(post), remote: true, class: " btn btn-success change" %>
+  <% end %>
+</div>
+
+<div class="row">
+  <div class="col-lg-1">
+    <div id="like">
+      <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
+      <% if pre_like %>
+        <%= link_to raw("<i class=\"fa fa-thumbs-up \"></i>"), post_like_path(post, pre_like), method: :delete, remote: true %>     
+      <% else %>
+        <%= link_to raw("<i class=\"fa fa-thumbs-o-up\"></i>"), post_likes_path(post), method: :post, remote: true %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-lg-1">
+    <div id="comment">
+      <a data-toggle="collapse" href="#comment_tab_<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-comment-o"></i>
+      </a>
+    </div>
+  </div>
+  <div class="col-lg-1">
+    <div id="share">
+      <%= link_to raw("<i class=\"fa fa-bullhorn\"></i>"), post_path(post)%>
+    </div>
+  </div>
+  <div class="col-lg-1">
+    <div id="saver">
+      <% pre_saver = post.savers.find{|saver| saver.user_id == current_user.id } %>    
+        <% if pre_saver %>
+          <%= link_to raw("<i class=\"fa fa-bookmark\"></i>"), post_saver_path(post, pre_saver), method: :delete, remote: true %>
+        <% else %>
+          <%= link_to raw("<i class=\"fa fa-bookmark-o\"></i>"), post_savers_path(post), method: :post, remote: true  %>
+      <% end %>
+    </div>
+  </div>
+</div> 
+<p id="like_count"><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+<div class="collapse comment_tab" id="comment_tab_<%= i %>">
+  <%= render post.comments %>
+</div>
+<%= form_for :comment ,url: post_comments_url(post_id: post.id), remote: true do |f| %>
+  <div class="row">
+    <div class="col-lg-10">
+      <%= f.text_area :content, class: 'form-control' %>
+    </div>
+    <div class="col-lg-2">
+      <%= f.submit "Comment"%>
+    </div>
+  </div>
+<% end %>  

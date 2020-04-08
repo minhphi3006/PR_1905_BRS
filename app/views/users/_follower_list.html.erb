@@ -1,0 +1,9 @@
+<% follower.each do |follower| %>
+<table class="table">
+  <tbody>
+    <tr>
+      <td><%= link_to follower.name, user_path(follower) %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>

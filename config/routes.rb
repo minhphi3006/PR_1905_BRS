@@ -1,5 +1,8 @@
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   Rails.application.routes.draw do
+  get 'savers/create'
+  get 'savers/destroy'
+  get 'savers/index'
   get 'search' => 'search#index'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
@@ -10,6 +13,7 @@
 
   resources :posts do
     resources :likes
+    resources :savers
   end
 
   resources :users do
@@ -17,6 +21,7 @@
       get :following, :followers
     end
   end
+  
   resources :posts do
     resources :comments
   end

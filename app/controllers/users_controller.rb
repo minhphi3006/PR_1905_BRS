@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts=current_user.posts.order(create_at: :desc)
+    @posts= @user.posts.order(create_at: :desc)
   end
 
   def new
@@ -44,6 +44,16 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def following
+    @user = User.find(params[:id])
+    @following = @user.following
+  end
+
+  def follower
+    @user = User.find(params[:id])
+    @follower = @user.followers
   end
 
   private

@@ -1,13 +1,46 @@
 <% @user ||= current_user %>
-  <li><a class="profile-stats-count" href="<%= following_user_path(@user) %>">
+  <li><a class="profile-stats-count" data-toggle="modal" data-target="#followingModal" href="<%= following_user_path(@user) %>">
     <strong id="following" class="stats">
       <%= @user.following.count %>
     </strong></a>
     following
   </li>
-  <li><a href="<%= followers_user_path(@user) %>">
+  <li><a data-toggle="modal" data-target="#followerModal" href="<%= followers_user_path(@user) %>">
     <strong id="followers" class="stats">
       <%= @user.followers.count %>
     </strong></a>
     followers
   </li>
+<!-- Modal following -->
+<div class="modal fade" id="followingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text center" id="exampleModalLabel">Following People</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "users/following_list", following: @user.following %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal follower -->
+<div class="modal fade" id="followerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text center" id="exampleModalLabel">Followers</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render "users/follower_list", follower: @user.followers %>
+      </div>
+    </div>
+  </div>
+</div>

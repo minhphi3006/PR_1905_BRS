@@ -1,43 +1,44 @@
 <!--Navigation Bar-->
-<nav class="navbar navbar-light bg-light d-flex">
-  <div class="container">
-    <div class="logo">
-    <%if logged_in?%>
-      <a class="navbar-brand" href="/index">
-      <i class="fa fa-camera-retro" aria-hidden="true"></i>
-        Filmy
-      </a>
-    <%else%>
-      <a class="navbar-brand" href="/#root">
-      <i class="fa fa-camera-retro" aria-hidden="true"></i>
-        Filmy
-      </a>
-    <%end%>
-    </div>
-      <div class="m-auto">
-        <%= form_with url: search_path, method: :get, local: true, class: 'form-inline search-form' do |form| %>
-          <%= form.text_field :query, value: params[:query], class: 'form-control mr-sm-2', placeholder: '#search' %>
+<div class=" navigation">
+  <nav class="navbar navbar-light bg-light d-flex">
+    <div class="container">
+      <div class="logo">
+      <%if logged_in?%>
+        <a class="navbar-brand" href="/index">
+          <%= image_tag("Logo.png",height:'40px') %>
+        </a>
+      <%else%>
+        <a class="navbar-brand" href="/#root">
+        <i class="fa fa-camera-retro" aria-hidden="true"></i>
+          Filmy
+        </a>
+      <%end%>
+      </div>
+        <div class="m-auto">
+          <%= form_with url: search_path, method: :get, local: true, class: 'form-inline search-form' do |form| %>
+            <%= form.text_field :query, value: params[:query], class: 'form-control mr-sm-2', placeholder: '#search' %>
+          <% end %>
+        </div>
+
+      <div class="user-section">
+        <a><i class="fa fa-compass" ></i></a>
+
+        <% if logged_in? %>
+
+        <a class="navbar-brand" href="<%= new_post_path %>">
+          <i class="fa fa-upload"></i>
+        </a>
+
+        <a class="navbar-brand" href="<%= user_path(current_user)%>">
+          <i class="fa fa-user" aria-hidden="true"></i>
+        </a>
+
+        <% else %>
+          <a class="navbar-brand" href="/sessions/new">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        </a>
         <% end %>
       </div>
-
-    <div class="user-section">
-      <a><i class="fa fa-compass" ></i></a>
-
-      <% if logged_in? %>
-
-      <a class="navbar-brand" href="<%= new_post_path %>">
-        <i class="fa fa-upload"></i>
-      </a>
-
-      <a class="navbar-brand" href="<%= user_path(current_user)%>">
-        <i class="fa fa-user" aria-hidden="true"></i>
-      </a>
-
-      <% else %>
-        <a class="navbar-brand" href="/sessions/new">
-      <i class="fa fa-user" aria-hidden="true"></i>
-      </a>
-      <% end %>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>

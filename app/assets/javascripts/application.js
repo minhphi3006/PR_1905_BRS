@@ -12,9 +12,28 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require turbolinks
-//= require_tree .
 //= require jquery3
+//= require jquery_ujs
+//= require turbolinks
 //= require popper
 //= require bootstrap
-//= require bootstrap-sprockets
+//= require_tree .
+
+$( document ).on('turbolinks:load', function(){
+
+  function activeTab(obj){
+    $('.user-tabs li ').removeClass('active');
+    $(obj).addClass('active');
+    var id = $(obj).find('a').attr('href')
+    $('.user-images').hide();
+    $(id).fadeIn();
+  };
+
+  // Sự kiện click đổi tab
+  $('ul.user-tabs li').click(function(){
+    activeTab(this);
+    return false;
+  });
+  // Active tab đầu tiên khi trang web được chạy
+  activeTab($('.user-tabs li:first-child'));
+});

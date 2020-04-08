@@ -3,7 +3,7 @@ class LikesController < ApplicationController
   before_action :find_like, only: [:destroy]
 
   def create
-    @post.likes.create user_id: current_user.id
+    @like= @post.likes.create user_id: current_user.id
   end
 
   def destroy
@@ -12,6 +12,7 @@ class LikesController < ApplicationController
 
   private
   def find_post
+    @i= params[:i]
     @post = Post.find(params[:post_id])
     @posts = Post.posts_on_timeline(current_user.list_of_followed_by_user, current_user)
   end

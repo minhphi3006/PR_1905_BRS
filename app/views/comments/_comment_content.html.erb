@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-lg-1">
+      <div class="avatar_comment">
+        <%if comment.user.avatar.attached? %>
+          <%=link_to user_path(comment.user) do %>
+            <%= image_tag comment.user.avatar %>
+          <%end %>
+        <%else%>
+          <%=image_tag(asset_path("Avatar.png"))%>
+        <%end %>
+      </div>
+    </div>
+    <div class="col-lg-10">
+    <div class="username_comment">
+      <span><%= link_to comment.user.name, user_path(comment.user) %><span>
+      <span><%= comment.content%></span>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button type="button" id="dropdownMenuButton" data-toggle="dropdown">
+      <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+    </button>
+    <div class="dropdown-menu text-center">
+      <div id="delete_comment">
+        <%if (current_user.id == comment.user_id)|| (current_user.id == comment.post.user_id) %>
+          <%= link_to "Destroy", [comment.post, comment], method: :delete,remote: true, class: "comment_destroy" %>
+        <%end%>
+      </div>
+      <div id="edit_comment">
+        <%if current_user.id == comment.user_id %>
+        <%= link_to "Edit", edit_post_comment_path(comment.post, comment),remote: true, class: "comment_edit"%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="time_comment">
+    <p><strong><%=time_ago_in_words(comment.created_at)%> ago </strong> </p>
+  </div>
+</div>
